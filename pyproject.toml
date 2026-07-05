@@ -1,0 +1,58 @@
+[build-system]
+requires = [
+    "setuptools>=68",
+    "wheel",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vla-scratch"
+version = "0.1.0"
+description = "Utilities for working with VLA Scratch datasets and policies."
+requires-python = "==3.10.*"
+dependencies = [
+    "torch",
+    "numpy",
+    "jaxtyping",
+    "tqdm",
+    "einops",
+    "tensordict",
+    "transformers==4.57.1",
+    "lerobot @ git+https://github.com/huggingface/lerobot@v0.4.2",
+    "num2words", # for smolvlm
+    "jsonlines",
+    "pillow",
+    "torchvision==0.22.0",
+    "hydra-core",
+    "omegaconf",
+    "wandb",
+    "setproctitle",
+    "setuptools",
+
+    # serve policy
+    "pyzmq",
+    "msgpack",
+    "art",
+    "emoji>=2.15.0",
+    
+    # debug
+    "pdbpp",
+
+    # NOT USED
+    # "matplotlib",
+    # "mujoco",
+    # "h5py",
+    # "accelerate",
+    # "viser",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+    "vla_scratch",
+    "vla_scratch.*",
+]
+namespaces = true
+
+[tool.ruff]
+line-length = 80

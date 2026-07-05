@@ -1,0 +1,109 @@
+{
+  "name": "smolvla_framesamp_spatial_tok64_0610",
+  "description": "Spatial-only ablation: SmolVLA-style FrameSamp with 8x8 / 64 tokens per image.",
+  "repo_root": "/root/autodl-tmp/res/VLA-scratch",
+  "python": "/root/autodl-tmp/res/envs/vla/bin/python",
+  "run_date": "2026-06-10",
+  "run_id": "smolvla_framesamp_spatial_tok64_0610",
+  "output_root": "outputs/2026-06-10",
+  "log_dir": "/root/autodl-tmp/res/install_logs/smolvla_framesamp_spatial_tok64_0610",
+  "eval_root": "outputs/eval/2026-06-10/smolvla_framesamp_spatial_tok64_0610",
+  "env": {
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True",
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "CUDA_VISIBLE_DEVICES": "0",
+    "TOKENIZERS_PARALLELISM": "false"
+  },
+  "tensorboard": {
+    "enabled": false,
+    "host": "127.0.0.1",
+    "port": 6007
+  },
+  "queue": {
+    "methods": [
+      "framesamp"
+    ],
+    "suites": [
+      {
+        "name": "spatial",
+        "data": "libero-ipec-spatial-local-v30-mem-k4",
+        "env_task": "libero_spatial",
+        "master_port": 29911
+      }
+    ]
+  },
+  "methods": {
+    "framesamp": {
+      "policy": "pi-smol-vismem-smolvla-k5",
+      "overrides": {
+        "policy.vision_memory_selection": "even",
+        "policy.vision_memory_max_tokens": 512,
+        "policy.vision_memory_token_per_image": 64,
+        "policy.vision_memory_add_pos_emb": true
+      }
+    }
+  },
+  "train": {
+    "script": "scripts/train_policy.py",
+    "nproc_per_node": 1,
+    "batch_size": 16,
+    "num_workers": 6,
+    "prefetch_factor": 4,
+    "use_ddp": true,
+    "low_mem": false,
+    "epochs": 50,
+    "log_interval": 20,
+    "eval_interval": 1000,
+    "save_interval": 10,
+    "wandb_mode": "disabled"
+  },
+  "eval": {
+    "enabled": true,
+    "script": "examples/libero_lerobot/eval_libero_lerobot.py",
+    "rename_script": "examples/libero_lerobot/rename_eval_videos.py",
+    "eval_n_episodes": 1,
+    "eval_batch_size": 1,
+    "max_episodes_rendered": 10,
+    "merge_policy_cfg": true,
+    "every_checkpoint": true,
+    "checkpoint_epochs": [10, 20, 30, 40, 50],
+    "best_metric": "overall.pc_success",
+    "keep_only_best": true
+  },
+  "common_overrides": {
+    "data.video_backend": "pyav",
+    "eval_data": "none",
+    "checkpoint_path": null,
+    "load_optimizer": false,
+    "policy.use_state": true,
+    "policy.state_history": 1,
+    "policy.action_horizon": 30,
+    "policy.transforms.0.max_length": 256,
+    "policy.transforms.0.image_size_longest_edge": 256,
+    "policy.transforms.0.max_image_size_longest_edge": 256,
+    "policy.freeze_vlm": true,
+    "policy.num_obs_registers": 0,
+    "policy.expert_only_use_register": false,
+    "policy.vlm_layer_selection": "first",
+    "policy.action_expert_cfg.only_attend_to_final_layer": false,
+    "policy.action_expert_cfg.hidden_size": 384,
+    "policy.action_expert_cfg.intermediate_size": 1536,
+    "policy.action_expert_cfg.num_attention_heads": 12,
+    "policy.action_expert_cfg.num_key_value_heads": 12,
+    "policy.action_expert_cfg.head_dim": 32,
+    "policy.action_expert_cfg.num_hidden_layers": 8,
+    "policy.use_mem_video_encoder": false,
+    "policy.mem_video_frame_history": 1,
+    "policy.use_vision_token_memory": true
+  },
+  "required_safety_overrides": {
+    "policy.vlm_layer_selection": "first",
+    "policy.action_expert_cfg.only_attend_to_final_layer": false,
+    "policy.vision_memory_add_pos_emb": true,
+    "policy.use_vision_token_memory": true,
+    "policy.expert_only_use_register": false,
+    "policy.num_obs_registers": 0,
+    "policy.vision_memory_token_per_image": 64
+  }
+}
