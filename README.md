@@ -2,24 +2,24 @@
 
 ```text
 robomme/
-+-- vla_scratch/
-|   +-- policies/
-|   |   +-- pi/
-|   |   +-- modules/
-|   |       +-- action_expert/
-|   |       +-- vlm_bridge/
-|   |           +-- smolvlm/
-|   |               +-- bridge.py
-|   |               +-- vision_memory.py
-|   |               +-- video_mem_encoder.py
-|   |               +-- processor.py
-|   |               +-- utils.py
-|   +-- datasets/
-+-- configs/
-+-- scripts/
-+-- tools/
-+-- docs/
-+-- weights/
+├── vla_scratch/
+│   ├── policies/
+│   │   ├── pi/
+│   │   └── modules/
+│   │       ├── action_expert/
+│   │       └── vlm_bridge/
+│   │           └── smolvlm/
+│   │               ├── bridge.py
+│   │               ├── vision_memory.py
+│   │               ├── video_mem_encoder.py
+│   │               ├── processor.py
+│   │               └── utils.py
+│   └── datasets/
+├── configs/
+├── scripts/
+├── tools/
+├── docs/
+└── weights/
 ```
 
 核心代码在 `vla_scratch/policies/modules/vlm_bridge/smolvlm` 下。
