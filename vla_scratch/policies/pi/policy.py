@@ -515,14 +515,6 @@ class PiPolicy(BasePolicy):
                 time=timestep,
             )
             torch.cuda.nvtx.range_pop()
-
-            # --- Sin/Cos encoded Yaw Handling ---
-            # Action layout: [x, y, z, sin_yaw, cos_yaw, gripper]
-            # Since we encoded Yaw into Sin/Cos, standard MSE/Huber Loss works correctly 
-            # across the unit circle without wrap-around discontinuities.
-            
-            # Standard Loss Calculation
-            # flow_mse = torch.nn.functional.mse_loss(u_t.to(v_t.dtype), v_t, reduction="none").mean()
             
             # Using Huber Loss (L1-like) for robustness
             flow_loss_elem = torch.nn.functional.huber_loss(
