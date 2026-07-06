@@ -49,8 +49,8 @@ Current running command uses:
 Important mismatch:
 
 - At 256px, the SmolVLM connector only yields 16 tokens per image. This matches our framesamp setting, but it does not match SmolVLA/RoboMME's 64-token-per-image spatial granularity.
-- The remote `vla_scratch/policies/modules/vlm_bridge/smolvlm/bridge.py` currently calls `get_image_features(...)`, which returns a 3D tensor. The code path that uses `vision_memory_token_per_image`, adds memory position embeddings, and performs tokendrop is guarded by `if memory_tokens.ndim == 4`, so it is not entered in this source state.
-- Therefore the current framesamp run is effectively using the connector output directly: `4 history frames x 2 cameras x 16 tokens = 128 memory tokens`. The configured 64-token tokendrop will not be equivalent to RoboMME unless we reshape/fix that code path and use enough spatial tokens, most directly by running 512px images or by doing token drop before the SmolVLM connector.
+- Earlier code only handled the 4D image-feature layout for TokenDrop. The current `vision_memory.py` restores the common 3D layout `[B*T*V, P, D]` to `[B, T*V, P, D]` before FrameSamp/TokenDrop selection.
+- The remaining limitation is spatial granularity: with 256px inputs, connector-space memory has 16 tokens per image. A true 64-token TokenDrop setting requires larger image features or pre-connector token selection.
 
 ## Practical Difference Summary
 

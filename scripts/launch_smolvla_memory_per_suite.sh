@@ -55,8 +55,8 @@ start_tensorboard() {
 
 method_policy() {
   case "$1" in
-    framesamp) echo "pi-smol-vismem-smolvla-k5" ;;
-    tokendrop) echo "pi-smol-tokendrop-smolvla-k5" ;;
+    framesamp) echo "pi-smol-vismem-layerwise-k5" ;;
+    tokendrop) echo "pi-smol-tokendrop-layerwise-k5" ;;
     *) echo "unknown method $1" >&2; exit 2 ;;
   esac
 }

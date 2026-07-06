@@ -80,8 +80,8 @@ remote_edit/config.py
 - `vision_memory_add_pos_emb`
 - `vlm_layer_selection = first | last`
 - SmolVLA-style policy:
-  - `pi-smol-vismem-smolvla-k5`
-  - `pi-smol-tokendrop-smolvla-k5`
+  - `pi-smol-vismem-layerwise-k5`
+  - `pi-smol-tokendrop-layerwise-k5`
 
 新配置默认：
 
@@ -144,4 +144,3 @@ only_attend_to_final_layer=false
 - `framesamp/goal` 已过模型加载和前 200 step。
 - GPU 使用约 5.6GB。
 - 训练日志显示 `memory/train.tokens=128`，符合 LIBERO `mem-k4` + FrameSamp 4x4 token 的预期。
-

@@ -47,7 +47,7 @@
   },
   "methods": {
     "framesamp": {
-      "policy": "pi-smol-vismem-smolvla-k5",
+      "policy": "pi-smol-vismem-layerwise-k5",
       "overrides": {
         "policy.vision_memory_selection": "even",
         "policy.vision_memory_max_tokens": 512,
@@ -56,7 +56,7 @@
       }
     },
     "tokendrop": {
-      "policy": "pi-smol-tokendrop-smolvla-k5",
+      "policy": "pi-smol-tokendrop-layerwise-k5",
       "overrides": {
         "policy.vision_memory_selection": "tokendrop",
         "policy.vision_memory_max_tokens": 512,

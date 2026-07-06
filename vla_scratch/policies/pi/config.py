@@ -285,21 +285,21 @@ pi_smolvlm_tokendrop_expert_k5_config = copy.deepcopy(
 )
 pi_smolvlm_tokendrop_expert_k5_config.vision_memory_integration = "expert"
 
-pi_smolvlm_vismem_smolvla_k5_config = copy.deepcopy(pi_smolvlm_vismem_k5_config)
-pi_smolvlm_vismem_smolvla_k5_config.vision_memory_max_tokens = 512
-pi_smolvlm_vismem_smolvla_k5_config.vision_memory_token_per_image = 16
-pi_smolvlm_vismem_smolvla_k5_config.vision_memory_add_pos_emb = True
-pi_smolvlm_vismem_smolvla_k5_config.vlm_layer_selection = "first"
-pi_smolvlm_vismem_smolvla_k5_config.action_expert_cfg.only_attend_to_final_layer = False
+pi_vismem_layerwise_k5_config = copy.deepcopy(pi_smolvlm_vismem_k5_config)
+pi_vismem_layerwise_k5_config.vision_memory_max_tokens = 512
+pi_vismem_layerwise_k5_config.vision_memory_token_per_image = 16
+pi_vismem_layerwise_k5_config.vision_memory_add_pos_emb = True
+pi_vismem_layerwise_k5_config.vlm_layer_selection = "first"
+pi_vismem_layerwise_k5_config.action_expert_cfg.only_attend_to_final_layer = False
 
-pi_smolvlm_tokendrop_smolvla_k5_config = copy.deepcopy(pi_smolvlm_tokendrop_k5_config)
-pi_smolvlm_tokendrop_smolvla_k5_config.vision_memory_max_tokens = 512
-pi_smolvlm_tokendrop_smolvla_k5_config.vision_memory_candidate_tokens = 2048
-pi_smolvlm_tokendrop_smolvla_k5_config.vision_memory_token_drop_stride = 8
-pi_smolvlm_tokendrop_smolvla_k5_config.vision_memory_token_per_image = 64
-pi_smolvlm_tokendrop_smolvla_k5_config.vision_memory_add_pos_emb = True
-pi_smolvlm_tokendrop_smolvla_k5_config.vlm_layer_selection = "first"
-pi_smolvlm_tokendrop_smolvla_k5_config.action_expert_cfg.only_attend_to_final_layer = False
+pi_tokendrop_layerwise_k5_config = copy.deepcopy(pi_smolvlm_tokendrop_k5_config)
+pi_tokendrop_layerwise_k5_config.vision_memory_max_tokens = 512
+pi_tokendrop_layerwise_k5_config.vision_memory_candidate_tokens = 2048
+pi_tokendrop_layerwise_k5_config.vision_memory_token_drop_stride = 8
+pi_tokendrop_layerwise_k5_config.vision_memory_token_per_image = 64
+pi_tokendrop_layerwise_k5_config.vision_memory_add_pos_emb = True
+pi_tokendrop_layerwise_k5_config.vlm_layer_selection = "first"
+pi_tokendrop_layerwise_k5_config.action_expert_cfg.only_attend_to_final_layer = False
 
 cs = ConfigStore.instance()
 cs.store(name="pi-paligemma", node=pi_paligemma_config, group="policy")
@@ -332,12 +332,22 @@ cs.store(
     group="policy",
 )
 cs.store(
+    name="pi-smol-vismem-layerwise-k5",
+    node=pi_vismem_layerwise_k5_config,
+    group="policy",
+)
+cs.store(
+    name="pi-smol-tokendrop-layerwise-k5",
+    node=pi_tokendrop_layerwise_k5_config,
+    group="policy",
+)
+cs.store(
     name="pi-smol-vismem-smolvla-k5",
-    node=pi_smolvlm_vismem_smolvla_k5_config,
+    node=pi_vismem_layerwise_k5_config,
     group="policy",
 )
 cs.store(
     name="pi-smol-tokendrop-smolvla-k5",
-    node=pi_smolvlm_tokendrop_smolvla_k5_config,
+    node=pi_tokendrop_layerwise_k5_config,
     group="policy",
 )

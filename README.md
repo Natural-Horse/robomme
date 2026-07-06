@@ -42,6 +42,8 @@ Notes:
 vla_scratch/                         # trainable package
   policies/pi/                       # Pi policy + config registry
   policies/modules/vlm_bridge/       # SmolVLM bridge and memory outputs
+    smolvlm/vision_memory.py         # FrameSamp / TokenDrop token selection
+    smolvlm/video_mem_encoder.py     # MEM video encoder path
   datasets/libero_global/            # IPEC LIBERO v30 loader/configs
 configs/experiments/                 # reproducible queue configs
 scripts/launch_vla_experiment_from_config.py
